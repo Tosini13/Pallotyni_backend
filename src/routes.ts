@@ -11,6 +11,12 @@ import {
   getConfession,
   updateConfession,
 } from "./controllers/confession";
+import {
+  createService,
+  deleteService,
+  getService,
+  updateService,
+} from "./controllers/service";
 
 const router = express.Router();
 
@@ -23,9 +29,10 @@ router.delete("/paragraphs/:id", deleteParagraph);
 
 // -----------------------------------------
 // SERVICES
-router.get("/services", (req, res) => {
-  res.send("services");
-});
+router.get("/services", getService);
+router.post("/services", createService);
+router.put("/services/:id", updateService);
+router.delete("/services/:id", deleteService);
 
 // -----------------------------------------
 // CONFESSIONS
