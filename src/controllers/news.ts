@@ -14,7 +14,6 @@ export const getAllNews = (req: Request, res: Response) => {
 };
 
 export const createNews = (req: Request, res: Response) => {
-  console.log(format(new Date(), DATE_TIME_FORMAT));
   const news: TNews = {
     title: req.body.title,
     content: req.body.content,
@@ -27,7 +26,6 @@ export const createNews = (req: Request, res: Response) => {
 };
 
 export const updateNews = (req: Request, res: Response) => {
-  console.log(format(new Date(), DATE_TIME_FORMAT));
   const news: TNews = {
     title: req.body.title,
     content: req.body.content,
