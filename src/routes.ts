@@ -17,6 +17,12 @@ import {
   getService,
   updateService,
 } from "./controllers/service";
+import {
+  createNews,
+  deleteNews,
+  getAllNews,
+  updateNews,
+} from "./controllers/news";
 
 const router = express.Router();
 
@@ -43,8 +49,9 @@ router.delete("/confessions/:id", deleteConfession);
 
 // -----------------------------------------
 // NEWS
-router.get("/news", (req, res) => {
-  res.send("news");
-});
+router.get("/news", getAllNews);
+router.post("/news", createNews);
+router.put("/news/:id", updateNews);
+router.delete("/news/:id", deleteNews);
 
 export default router;
