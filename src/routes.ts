@@ -1,11 +1,20 @@
 import express from "express";
-import { getParagraph } from "./controllers/paragraph";
+import {
+  createParagraph,
+  deleteParagraph,
+  getParagraph,
+  updateParagraph,
+} from "./controllers/paragraph";
+import { getConfession } from "./controllers/confession";
 
 const router = express.Router();
 
 // -----------------------------------------
 // PARAGRAPHS
 router.get("/paragraphs", getParagraph);
+router.post("/paragraphs", createParagraph);
+router.put("/paragraphs/:id", updateParagraph);
+router.delete("/paragraphs/:id", deleteParagraph);
 
 // -----------------------------------------
 // SERVICES
@@ -15,9 +24,7 @@ router.get("/services", (req, res) => {
 
 // -----------------------------------------
 // CONFESSIONS
-router.get("/confessions", (req, res) => {
-  res.send("confessions");
-});
+router.get("/confessions", getConfession);
 
 // -----------------------------------------
 // NEWS

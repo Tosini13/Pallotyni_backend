@@ -15,3 +15,8 @@ const SParagraph = new Schema({
 const Paragraph = mongoose.model("paragraph", SParagraph);
 
 export default Paragraph;
+
+export type TParagraph = {
+  title: string;
+  content: string;
+};
