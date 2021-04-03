@@ -8,6 +8,7 @@ const app = express();
 mongoose.connect("mongodb://localhost/Pallotyni_test", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useFindAndModify: false,
 });
 
 mongoose.Promise = global.Promise;
