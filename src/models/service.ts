@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 const Schema = mongoose.Schema;
 
 const SService = new Schema({
@@ -28,10 +28,6 @@ const SService = new Schema({
   },
 });
 
-const Service = mongoose.model("service", SService);
-
-export default Service;
-
 export type TService = {
   title: string;
   time: string;
@@ -39,3 +35,19 @@ export type TService = {
   date?: string;
   priest: string;
 };
+
+export type TServiceRes = TService & {
+  id: string;
+};
+
+export interface IService extends Document {
+  title: string;
+  time: string;
+  days?: string[];
+  date?: string;
+  priest: string;
+}
+
+const Service = mongoose.model<IService>("service", SService);
+
+export default Service;
