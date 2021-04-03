@@ -30,8 +30,6 @@ app.use("/api", router);
 
 const PORT = 3013;
 
-app.get("/", (req, res) => res.send("Express haha"));
-
 app.listen(PORT, () => {
   console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
 });
