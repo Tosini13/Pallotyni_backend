@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 const Schema = mongoose.Schema;
 
 const SNews = new Schema({
@@ -16,12 +16,22 @@ const SNews = new Schema({
   },
 });
 
-const News = mongoose.model("news", SNews);
-
-export default News;
-
 export type TNews = {
   title: string;
   content: string;
   createdAt: string;
 };
+
+export type TNewsRes = TNews & {
+  id: string;
+};
+
+export interface INews extends Document {
+  title: string;
+  content: string;
+  createdAt: string;
+}
+
+const News = mongoose.model<INews>("news", SNews);
+
+export default News;
