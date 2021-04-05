@@ -23,6 +23,18 @@ import {
   getAllNews,
   updateNews,
 } from "./controllers/news";
+import {
+  deleteImage,
+  multerConfig,
+  updateImage,
+  uploadImage,
+} from "./controllers/images";
+import {
+  createPhotograph,
+  deletePhotograph,
+  getPhotographs,
+  updatePhotograph,
+} from "./controllers/photograph";
 
 const router = express.Router();
 
@@ -53,5 +65,18 @@ router.get("/news", getAllNews);
 router.post("/news", createNews);
 router.put("/news/:id", updateNews);
 router.delete("/news/:id", deleteNews);
+
+// -----------------------------------------
+// PHOTOGRAPHS
+router.get("/photographs", getPhotographs);
+router.post("/photographs", createPhotograph);
+router.put("/photographs/:id", updatePhotograph);
+router.delete("/photographs/:id", deletePhotograph);
+
+// -----------------------------------------
+// IMAGES
+router.post("/images", multerConfig.single("img"), uploadImage);
+router.put("/images/:path", multerConfig.single("img"), updateImage);
+router.delete("/images/:path", deleteImage);
 
 export default router;

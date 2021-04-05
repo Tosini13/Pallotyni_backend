@@ -27,6 +27,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/gallery", express.static("gallery"));
+
 app.use("/api", router);
 
 const PORT = 3013;
