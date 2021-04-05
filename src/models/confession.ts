@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 const Schema = mongoose.Schema;
 
 const SConfession = new Schema({
@@ -32,10 +32,6 @@ const SConfession = new Schema({
   },
 });
 
-const Confession = mongoose.model("confession", SConfession);
-
-export default Confession;
-
 export type TConfession = {
   title: string;
   date?: string;
@@ -44,3 +40,20 @@ export type TConfession = {
   toTime: string;
   priest: string;
 };
+
+export type TConfessionRes = TConfession & {
+  id: string;
+};
+
+export interface IConfession extends Document {
+  title: string;
+  date?: string;
+  days?: string[];
+  fromTime: string;
+  toTime: string;
+  priest: string;
+}
+
+const Confession = mongoose.model<IConfession>("confession", SConfession);
+
+export default Confession;
