@@ -1,6 +1,6 @@
 import fs from "fs";
 import { format } from "date-fns";
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import multer from "multer";
 import { DATE_FILE_NAME } from "../models/global";
 import path from "path";
