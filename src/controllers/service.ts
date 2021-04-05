@@ -1,9 +1,24 @@
 import { Request, Response } from "express";
-import Service, { TService } from "../models/service";
+import { LeanDocument } from "mongoose";
+import Service, { IService, TService, TServiceRes } from "../models/service";
+
+const convertService = (service: LeanDocument<IService>): TServiceRes => {
+  return {
+    id: service._id,
+    days: service.days?.length ? service.days : undefined,
+    date: service.date ?? undefined,
+    priest: service.priest,
+    time: service.time,
+    title: service.title,
+  };
+};
 
 export const getService = (req: Request, res: Response) => {
   Service.find({})
-    .then((services) => res.send(services))
+    .lean()
+    .then((services) =>
+      res.send(services.map((service) => convertService(service)))
+    )
     .catch((err) => console.log(err));
 };
 
@@ -16,7 +31,12 @@ export const createService = (req: Request, res: Response) => {
     priest: req.body.priest,
   };
   Service.create(service)
-    .then((s) => res.send(s))
+    .then((newService) => {
+      Service.findOne({ _id: newService._id })
+        .lean()
+        .then((s) => res.send(s && convertService(s)))
+        .catch((err) => console.log(err));
+    })
     .catch((err) => console.log(err));
 };
 
@@ -31,7 +51,10 @@ export const updateService = (req: Request, res: Response) => {
   Service.findByIdAndUpdate({ _id: req.params.id }, service)
     .then((oldService) => {
       Service.findOne({ _id: req.params.id })
-        .then((newService) => res.send(newService))
+        .lean()
+        .then((newService) =>
+          res.send(newService && convertService(newService))
+        )
         .catch((err) => console.log(err));
     })
     .catch((err) => console.log(err));
@@ -39,6 +62,6 @@ export const updateService = (req: Request, res: Response) => {
 
 export const deleteService = (req: Request, res: Response) => {
   Service.findByIdAndRemove({ _id: req.params.id })
-    .then((s) => res.send(s))
+    .then((s) => res.send(s && convertService(s)))
     .catch((err) => console.log(err));
 };
