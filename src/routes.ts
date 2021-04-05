@@ -23,6 +23,12 @@ import {
   getAllNews,
   updateNews,
 } from "./controllers/news";
+import {
+  multerConfig,
+  uploadImage,
+  uploadImageError,
+} from "./controllers/images";
+import { getPhotographs } from "./controllers/photograph";
 
 const router = express.Router();
 
@@ -53,5 +59,18 @@ router.get("/news", getAllNews);
 router.post("/news", createNews);
 router.put("/news/:id", updateNews);
 router.delete("/news/:id", deleteNews);
+
+// -----------------------------------------
+// PHOTOGRAPHS
+router.get("/photograph", getPhotographs);
+
+// -----------------------------------------
+// IMAGES
+router.post(
+  "/images",
+  multerConfig.single("img"),
+  uploadImage,
+  uploadImageError
+);
 
 export default router;
