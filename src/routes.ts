@@ -23,7 +23,12 @@ import {
   getAllNews,
   updateNews,
 } from "./controllers/news";
-import { deleteImage, multerConfig, uploadImage } from "./controllers/images";
+import {
+  deleteImage,
+  multerConfig,
+  updateImage,
+  uploadImage,
+} from "./controllers/images";
 import {
   createPhotograph,
   deletePhotograph,
@@ -71,7 +76,7 @@ router.delete("/photographs/:id", deletePhotograph);
 // -----------------------------------------
 // IMAGES
 router.post("/images", multerConfig.single("img"), uploadImage);
-router.put("/images/:path", multerConfig.single("img"), uploadImage);
+router.put("/images/:path", multerConfig.single("img"), updateImage);
 router.delete("/images/:path", deleteImage);
 
 export default router;
