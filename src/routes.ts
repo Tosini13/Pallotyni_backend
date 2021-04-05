@@ -23,12 +23,13 @@ import {
   getAllNews,
   updateNews,
 } from "./controllers/news";
+import { deleteImage, multerConfig, uploadImage } from "./controllers/images";
 import {
-  multerConfig,
-  uploadImage,
-  uploadImageError,
-} from "./controllers/images";
-import { getPhotographs } from "./controllers/photograph";
+  createPhotograph,
+  deletePhotograph,
+  getPhotographs,
+  updatePhotograph,
+} from "./controllers/photograph";
 
 const router = express.Router();
 
@@ -62,15 +63,15 @@ router.delete("/news/:id", deleteNews);
 
 // -----------------------------------------
 // PHOTOGRAPHS
-router.get("/photograph", getPhotographs);
+router.get("/photographs", getPhotographs);
+router.post("/photographs", createPhotograph);
+router.put("/photographs/:id", updatePhotograph);
+router.delete("/photographs/:id", deletePhotograph);
 
 // -----------------------------------------
 // IMAGES
-router.post(
-  "/images",
-  multerConfig.single("img"),
-  uploadImage,
-  uploadImageError
-);
+router.post("/images", multerConfig.single("img"), uploadImage);
+router.put("/images/:path", multerConfig.single("img"), uploadImage);
+router.delete("/images/:path", deleteImage);
 
 export default router;
