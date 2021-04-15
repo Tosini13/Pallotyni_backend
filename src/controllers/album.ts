@@ -46,6 +46,7 @@ export const updateAlbum = (req: Request, res: Response) => {
 };
 
 export const deleteAlbum = (req: Request, res: Response) => {
+  // TODO: Delete all the file from the album
   Album.findByIdAndRemove({ _id: req.params.id })
     .then((n) => n && res.send(convertAlbum(n)))
     .catch((e) => console.log(e));
