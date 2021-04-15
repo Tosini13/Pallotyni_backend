@@ -11,8 +11,8 @@ const multerStorage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const extension = file.mimetype.replace("image/", "");
-    const originalname = file.originalname.replace(" ", "_").replace("/", "_");
-    const filename = `${originalname}_${format(new Date(), DATE_FILE_NAME)}`;
+    const originalName = file.originalname.replace(" ", "_").replace("/", "_");
+    const filename = `${originalName}_${format(new Date(), DATE_FILE_NAME)}`;
     cb(null, `${filename}.${extension}`);
   },
 });
@@ -23,6 +23,11 @@ export const multerConfig = multer({
 
 export const uploadImage = (req: Request, res: Response) => {
   res.send(req.file.filename);
+};
+
+export const uploadImages = (req: Request, res: Response) => {
+  const files = req.files as Express.Multer.File[]; // Is it ok?!?
+  res.send(files.map((file) => file.filename));
 };
 
 export const updateImage = (req: Request, res: Response) => {

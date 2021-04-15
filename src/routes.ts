@@ -28,6 +28,7 @@ import {
   multerConfig,
   updateImage,
   uploadImage,
+  uploadImages,
 } from "./controllers/images";
 import {
   createPhotograph,
@@ -35,6 +36,12 @@ import {
   getPhotographs,
   updatePhotograph,
 } from "./controllers/photograph";
+import {
+  createAlbum,
+  deleteAlbum,
+  getAlbum,
+  updateAlbum,
+} from "./controllers/album";
 
 const router = express.Router();
 
@@ -74,7 +81,15 @@ router.put("/photographs/:id", updatePhotograph);
 router.delete("/photographs/:id", deletePhotograph);
 
 // -----------------------------------------
+// ALBUM
+router.get("/albums", getAlbum);
+router.post("/albums", createAlbum);
+router.put("/albums/:id", updateAlbum);
+router.delete("/albums/:id", deleteAlbum);
+
+// -----------------------------------------
 // IMAGES
+router.post("/many-images", multerConfig.array("images"), uploadImages);
 router.post("/images", multerConfig.single("img"), uploadImage);
 router.put("/images/:path", multerConfig.single("img"), updateImage);
 router.delete("/images/:path", deleteImage);
