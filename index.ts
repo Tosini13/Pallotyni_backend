@@ -34,5 +34,7 @@ app.use("/api", router);
 const PORT = 3013;
 
 app.listen(PORT, () => {
-  console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
+  console.log(
+    `⚡️[server]: Server is running now at https://localhost:${PORT}`
+  );
 });
