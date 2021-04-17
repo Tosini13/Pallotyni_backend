@@ -32,9 +32,7 @@ export const uploadImages = (req: Request, res: Response) => {
 
 export const updateImage = (req: Request, res: Response) => {
   const rootPath = path.dirname(require.main?.filename ?? "");
-  console.log(`${rootPath}\\gallery\\${req.params.path}`);
   fs.unlink(`${rootPath}\\gallery\\${req.params.path}`, () => {
-    console.log("filename", req.file.filename);
     res.send(req.file.filename);
   });
 };
