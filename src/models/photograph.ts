@@ -10,12 +10,20 @@ const SPhotograph = new Schema({
     type: String,
     required: [true, "Photograph path is required"],
   },
+  createdAt: {
+    type: String,
+    required: false,
+  },
 });
 
 export type TPhotograph = {
   description?: string;
   path: string;
+  createdAt: string;
 };
+
+export type TPhotographCreateReq = Omit<TPhotograph, "createdAt">;
+
 export type TPhotographRes = TPhotograph & {
   id: string;
 };
@@ -23,6 +31,7 @@ export type TPhotographRes = TPhotograph & {
 export interface IPhotograph extends Document {
   description?: string;
   path: string;
+  createdAt: string;
 }
 
 const Photograph = mongoose.model<IPhotograph>("photograph", SPhotograph);
