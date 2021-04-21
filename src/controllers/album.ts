@@ -1,3 +1,5 @@
+import fs from "fs";
+import path from "path";
 import { Request, Response } from "express";
 import { LeanDocument } from "mongoose";
 import Album, {
@@ -99,6 +101,23 @@ export const createManyPhotographsAndAddToAlbum = async (
 export const deleteAlbum = (req: Request, res: Response) => {
   // TODO: Delete all the file from the album
   Album.findByIdAndRemove({ _id: req.params.id })
-    .then((n) => n && res.send(convertAlbum(n)))
-    .catch((e) => console.log(e));
+    .then(async (album) => {
+      if (album) {
+        const photos = await Photograph.find({ _id: album.photos });
+        Photograph.deleteMany({ _id: album.photos })
+          .then((response) => {
+            const rootPath = path.dirname(require.main?.filename ?? "");
+            photos.forEach((photo) => {
+              fs.unlink(`${rootPath}/gallery/${photo.path}`, () => {});
+            });
+            // TODO: probably it makes warning
+            res.send({ album: convertAlbum(album), photos });
+          })
+          .catch((err) => {
+            res.send(convertAlbum(album));
+          });
+      }
+      res.send(album);
+    })
+    .catch((e) => console.log("e", e));
 };
