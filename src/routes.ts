@@ -84,7 +84,7 @@ router.get("/photographs/:albumId", getPhotographs);
 router.post("/photographs", createPhotograph);
 router.post("/photographs/:albumId", createPhotographAddToAlbum);
 router.put("/photographs/:id", updatePhotograph);
-router.delete("/photographs/:id", deletePhotograph);
+router.delete("/albums/:albumId/photographs/:photographId", deletePhotograph);
 
 // -----------------------------------------
 // ALBUM

@@ -1,12 +1,16 @@
 import { Request, Response } from "express";
 import { LeanDocument } from "mongoose";
+import { RSA_NO_PADDING } from "node:constants";
 import Album from "../models/album";
 import Photograph, {
   IPhotograph,
   TPhotograph,
   TPhotographRes,
 } from "../models/photograph";
-import { createPhotoAndAddToAlbumAction } from "./actions/photographs";
+import {
+  createPhotoAndAddToAlbumAction,
+  deletePhotographAction,
+} from "./actions/photographs";
 
 export const convertPhotograph = (
   photograph: LeanDocument<IPhotograph>
@@ -78,8 +82,10 @@ export const updatePhotograph = (req: Request, res: Response) => {
     .catch((e) => console.log(e));
 };
 
-export const deletePhotograph = (req: Request, res: Response) => {
-  Photograph.findByIdAndRemove({ _id: req.params.id })
-    .then((photo) => photo && res.send(convertPhotograph(photo)))
-    .catch((err) => console.log(err));
+export const deletePhotograph = async (req: Request, res: Response) => {
+  const response = await deletePhotographAction({
+    photographId: req.params.photographId,
+    albumId: req.params.albumId,
+  });
+  res.send(response);
 };
