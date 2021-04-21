@@ -5,11 +5,10 @@ import Photograph, {
   IPhotograph,
   TPhotograph,
   TPhotographRes,
-  TPhotographCreateReq,
 } from "../models/photograph";
-import { convertAlbum } from "./album";
+import { createPhotoAndAddToAlbumAction } from "./actions/photographs";
 
-const convertPhotograph = (
+export const convertPhotograph = (
   photograph: LeanDocument<IPhotograph>
 ): TPhotographRes => ({
   id: photograph._id,
@@ -45,6 +44,23 @@ export const createPhotograph = (req: Request, res: Response) => {
   Photograph.create(photograph)
     .then((photo) => res.send(convertPhotograph(photo)))
     .catch((e) => console.log(e));
+};
+
+export const createPhotographAddToAlbum = async (
+  req: Request,
+  res: Response
+) => {
+  const photograph: TPhotograph = {
+    description: req.body.description,
+    path: req.body.path,
+    createdAt: new Date().toISOString(),
+  };
+  const response = await createPhotoAndAddToAlbumAction({
+    photograph,
+    albumId: req.params.albumId,
+  });
+  console.log("response", response);
+  res.send(response);
 };
 
 export const updatePhotograph = (req: Request, res: Response) => {

@@ -4,35 +4,38 @@ import { Request, Response } from "express";
 import { LeanDocument } from "mongoose";
 import Album, {
   IAlbum,
+  TAlbumBody,
   TAlbum,
-  TAlbumRes,
   TAlbumReq,
   TPhotographCreateAndAddToAlbumReq,
 } from "../models/album";
 import Photograph, { TPhotograph } from "../models/photograph";
+import {
+  upadteAlbumAction,
+  getAlbumsAction,
+  getAlbumAction,
+} from "./actions/albums";
 const ObjectID = require("mongodb").ObjectID;
 
-export const convertAlbum = (album: LeanDocument<IAlbum>): TAlbumRes => ({
+export const convertAlbum = (album: LeanDocument<IAlbum>): TAlbum => ({
   id: album._id,
   title: album.title,
   description: album.description,
   photos: album.photos,
 });
 
-export const getAlbums = (req: Request, res: Response) => {
-  Album.find({})
-    .then((items) => res.send(items.map((item) => convertAlbum(item))))
-    .catch((err) => console.log(err));
+export const getAlbums = async (req: Request, res: Response) => {
+  const response = await getAlbumsAction();
+  res.send(response);
 };
 
-export const getAlbum = (req: Request, res: Response) => {
-  Album.find({})
-    .then((items) => res.send(items.map((item) => convertAlbum(item))))
-    .catch((err) => console.log(err));
+export const getAlbum = async (req: Request, res: Response) => {
+  const response = await getAlbumAction({ id: req.params.id });
+  res.send(response);
 };
 
 export const createAlbum = (req: Request, res: Response) => {
-  const album: TAlbum = {
+  const album: TAlbumBody = {
     title: req.body.title,
     description: req.body.description,
     photos: [],
@@ -43,29 +46,17 @@ export const createAlbum = (req: Request, res: Response) => {
     .catch((e) => console.log(e));
 };
 
-export const updateAlbum = (req: Request, res: Response) => {
-  const album: TAlbum = {
+export const updateAlbum = async (req: Request, res: Response) => {
+  const album: TAlbumBody = {
     title: req.body.title,
     description: req.body.description,
     photos: req.body.photos || [],
   };
 
-  Album.findByIdAndUpdate({ _id: req.params.id }, album)
-    .then((oldAlbum) => {
-      Album.findOne({ _id: req.params.id })
-        .then(
-          (updatedAlbum) => updatedAlbum && res.send(convertAlbum(updatedAlbum))
-        )
-        .catch((e) => console.log(e));
-    })
-    .catch((e) => console.log(e));
+  const response = await upadteAlbumAction({ id: req.params.id, album });
+  res.send(response);
 };
 
-type TPhotographsToAlbum = Array<
-  TPhotograph & {
-    id: string;
-  }
->;
 export const createManyPhotographsAndAddToAlbum = async (
   req: Request,
   res: Response
@@ -79,7 +70,7 @@ export const createManyPhotographsAndAddToAlbum = async (
     const photographsData = await Photograph.insertMany(photographs);
     const albumToUpdate = await Album.findOne({ _id: req.params.id });
     if (!albumToUpdate) return false;
-    const album: TAlbum = {
+    const album: TAlbumBody = {
       title: albumToUpdate.title,
       description: albumToUpdate.description,
       photos: [

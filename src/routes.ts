@@ -32,6 +32,7 @@ import {
 } from "./controllers/images";
 import {
   createPhotograph,
+  createPhotographAddToAlbum,
   deletePhotograph,
   getAllPhotographs,
   getPhotographs,
@@ -81,6 +82,7 @@ router.delete("/news/:id", deleteNews);
 router.get("/photographs", getAllPhotographs);
 router.get("/photographs/:albumId", getPhotographs);
 router.post("/photographs", createPhotograph);
+router.post("/photographs/:albumId", createPhotographAddToAlbum);
 router.put("/photographs/:id", updatePhotograph);
 router.delete("/photographs/:id", deletePhotograph);
 

@@ -24,13 +24,13 @@ export type TAlbumReq = {
   photos: TPhotographReq[];
 };
 
-export type TAlbum = {
+export type TAlbumBody = {
   title: string;
   description: string;
   photos: Array<string>;
 };
 
-export type TAlbumRes = TAlbum & {
+export type TAlbum = TAlbumBody & {
   id: string;
 };
 
