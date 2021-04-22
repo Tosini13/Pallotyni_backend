@@ -80,7 +80,7 @@ router.delete("/news/:id", deleteNews);
 // PHOTOGRAPHS
 
 router.get("/photographs", getAllPhotographs);
-router.get("/photographs/:albumId", getPhotographs);
+router.get("/albums/:albumId/photographs", getPhotographs);
 router.post("/photographs", createPhotograph);
 router.post("/photographs/:albumId", createPhotographAddToAlbum);
 router.put("/photographs/:id", updatePhotograph);
