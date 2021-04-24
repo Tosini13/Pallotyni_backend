@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.ts",
     "build": "tsc --project ./",
-    "start:db": "systemctl start mongod && systemctl status mongod",
-    "stop:db": "systemctl stop mongod && systemctl status mongod"
+    "db:start": "systemctl start mongod && systemctl status mongod",
+    "db:stop": "systemctl stop mongod && systemctl status mongod"
   },
   "keywords": [],
   "author": "",
