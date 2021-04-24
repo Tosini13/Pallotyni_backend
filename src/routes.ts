@@ -32,14 +32,17 @@ import {
 } from "./controllers/images";
 import {
   createPhotograph,
+  createPhotographAddToAlbum,
   deletePhotograph,
+  getAllPhotographs,
   getPhotographs,
   updatePhotograph,
 } from "./controllers/photograph";
 import {
   createAlbum,
+  createManyPhotographsAndAddToAlbum,
   deleteAlbum,
-  getAlbum,
+  getAlbums,
   updateAlbum,
 } from "./controllers/album";
 
@@ -75,16 +78,20 @@ router.delete("/news/:id", deleteNews);
 
 // -----------------------------------------
 // PHOTOGRAPHS
-router.get("/photographs", getPhotographs);
+
+router.get("/photographs", getAllPhotographs);
+router.get("/albums/:albumId/photographs", getPhotographs);
 router.post("/photographs", createPhotograph);
+router.post("/photographs/:albumId", createPhotographAddToAlbum);
 router.put("/photographs/:id", updatePhotograph);
-router.delete("/photographs/:id", deletePhotograph);
+router.delete("/albums/:albumId/photographs/:photographId", deletePhotograph);
 
 // -----------------------------------------
 // ALBUM
-router.get("/albums", getAlbum);
+router.get("/albums", getAlbums);
 router.post("/albums", createAlbum);
 router.put("/albums/:id", updateAlbum);
+router.put("/albumsAddManyPhotos/:id", createManyPhotographsAndAddToAlbum);
 router.delete("/albums/:id", deleteAlbum);
 
 // -----------------------------------------

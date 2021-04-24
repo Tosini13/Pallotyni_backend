@@ -1,4 +1,5 @@
 import mongoose, { Document } from "mongoose";
+import { TPhotograph, TPhotographCreateReq } from "./photograph";
 const Schema = mongoose.Schema;
 
 const SAlbum = new Schema({
@@ -16,14 +17,26 @@ const SAlbum = new Schema({
   },
 });
 
-export type TAlbum = {
+type TPhotographReq = TPhotograph & { id: string };
+export type TAlbumReq = {
+  title: string;
+  description: string;
+  photos: TPhotographReq[];
+};
+
+export type TAlbumBody = {
   title: string;
   description: string;
   photos: Array<string>;
 };
 
-export type TAlbumRes = TAlbum & {
+export type TAlbum = TAlbumBody & {
   id: string;
+};
+
+export type TPhotographCreateAndAddToAlbumReq = {
+  albumId: string;
+  paths: string[];
 };
 
 export interface IAlbum extends Document {
