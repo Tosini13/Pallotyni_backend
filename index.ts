@@ -2,14 +2,18 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import router from "./src/routes";
+require("dotenv").config();
 
 const app = express();
 
-mongoose.connect("mongodb://localhost/Pallotyni_test", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-});
+mongoose.connect(
+  `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@cluster0.szdk8.mongodb.net/${process.env.MONGO_DB_DATABASE}?retryWrites=true&w=majority`,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  }
+);
 
 mongoose.Promise = global.Promise;
 
