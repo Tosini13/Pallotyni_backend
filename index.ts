@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import router from "./src/routes";
+import path from "path";
 require("dotenv").config();
 
 const app = express();
@@ -33,7 +34,15 @@ app.use((req, res, next) => {
 
 app.use("/gallery", express.static("gallery"));
 
+// Have Node serve the files for our built React app
+app.use(express.static(path.resolve(__dirname, "../Pallotyni/build")));
+
 app.use("/api", router);
+
+// All other GET requests not handled before will return our React app
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../Pallotyni/build", "index.html"));
+});
 
 const PORT = 3013;
 
