@@ -5,6 +5,7 @@
     "rootDir": "./",
     "outDir": "./build",
     "esModuleInterop": true, // compile ES6 to commonjs modules
-    "strict": true // strict type-checking
+    "strict": true, // strict type-checking,
+    "noImplicitAny": false
   }
 }
