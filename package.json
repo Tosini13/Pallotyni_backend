@@ -4,11 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server/index.js",
-    "build": "cd Pallotyni && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "nodemon index.ts",
-    "build:dev": "tsc --project ./",
+    "start": "nodemon index.ts",
+    "build": "tsc --project ./",
     "db:start": "systemctl start mongod && systemctl status mongod",
     "db:stop": "systemctl stop mongod && systemctl status mongod"
   },
